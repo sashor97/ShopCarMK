@@ -1,0 +1,202 @@
+﻿@model RentACar.Models.Kategorija
+@{
+    ViewBag.Title = "PrikaziVozilaKategorija";
+}
+
+<h2>Возила што припаѓаат на категорија <b>@Model.Name</b> се:</h2>
+
+
+
+
+<div class="container border">
+    <div class="row">
+        <!-- 
+            <div class="col-lg-2 col-md-2">
+
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcR9Uunys_5M-lmoPAUatWQXMX7N74ZvXyn9sOQ5_k5ASIjvhsW-&usqp=CAU" class="img-responsive" />
+
+
+    Сортирај според:
+    <ul class="list-group mb-4 ml-3" style="list-style: none">
+
+        <a href="/Voziloes/Index?sortNumber=1">
+            <li class="p-2 border btn-default">
+                Цена-растечки
+            </li>
+        </a>
+        <a href="/Voziloes/Index?sortNumber=2">
+            <li class="p-2 border btn-default">
+                Цена-опаѓачки
+            </li>
+        </a>
+        <a href="/Voziloes/Index?sortNumber=3">
+            <li class="p-2 border btn-default">
+                Име на производител
+            </li>
+        </a>
+        <a href="/Voziloes/Index?sortNumber=4">
+            <li class="p-2 border btn-default">
+                Име на модел
+            </li>
+        </a>
+        <a href="/Voziloes/Index?sortNumber=5">
+            <li class="p-2 border btn-default">
+                Локација
+            </li>
+        </a>
+        <a href="/Voziloes/Index">
+            <li class="p-2 border btn-default">
+                Отстрани сортирање
+            </li>
+        </a>
+    </ul>
+        -->
+
+    </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 ">
+            @foreach (var item in Model.Vozila)
+            {
+                if (User.IsInRole("Owner"))
+                {
+                    if (item.SopstvenikId == ViewBag.SopstvenikId)
+                    {
+                        <div class="col-lg-4 col-md-4 col-sm-6">
+                            <div class="border rounded bg-light p-2 mt-3">
+                                <div class="row">
+                                    <div class="col-lg-12 text-center">
+                                        <a href="/Voziloes/Details/@item.VoziloId">
+                                            <img src="@item.ImageUrl" class="img-thumbnail mt-3" style="height: 200px;" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="row">
+                                            <div class="col-lg-8">
+                                                @item.ModelName
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <span class="place-right">
+                                                    @item.PriceDay €
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                @item.Location
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-lg-12 text-center">
+                                                <!--  <a href="/Voziloes/Details/@item.VoziloId" class="color-white">
+                                                    <button class="btn btn-primary m-2">
+                                                        Детали
+                                                    </button>
+                                                </a>  -->
+                                                @if (User.IsInRole("Administrator") || User.IsInRole("Owner"))
+                                                {
+                                                    @*@Html.ActionLink("Edit", "Edit", new { id = item.VoziloId }) <span> | </span>*@
+
+                                                    <a href="/Voziloes/Edit/@item.VoziloId" class="color-white">
+                                                        <button class="btn btn-primary m-2">
+                                                            Промени
+                                                        </button>
+                                                    </a>
+                                                    <a href="/Voziloes/Delete/@item.VoziloId" class="color-white">
+                                                        <button class="btn btn-danger m-2">
+                                                            Избриши
+                                                        </button>
+                                                    </a>
+                                                    @*@Html.ActionLink("Delete", "Delete", new { id = item.VoziloId }) <span> | </span>*@
+                                                }
+
+                                                @*@Html.ActionLink("Details", "Details", new { id = item.VoziloId })*@
+
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                
+            }
+            else
+            {
+            <div class="col-lg-4 col-md-4 col-sm-6">
+                <div class="border rounded bg-light p-2 mt-3">
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                            <a href="/Voziloes/Details/@item.VoziloId">
+                                <img src="@item.ImageUrl" class="img-thumbnail mt-3" style="height: 200px;" />
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    @item.ModelName
+                                </div>
+                                <div class="col-lg-4">
+                                    <span class="place-right">
+                                        @item.PriceDay €
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    @item.Location
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12 text-center">
+                                    <!--  <a href="/Voziloes/Details/@item.VoziloId" class="color-white">
+                                        <button class="btn btn-primary m-2">
+                                            Детали
+                                        </button>
+                                    </a>  -->
+                                    @if (User.IsInRole("Administrator") || User.IsInRole("Owner"))
+                                    {
+                                        @*@Html.ActionLink("Edit", "Edit", new { id = item.VoziloId }) <span> | </span>*@
+
+                                        <a href="/Voziloes/Edit/@item.VoziloId" class="color-white">
+                                            <button class="btn btn-primary m-2">
+                                                Промени
+                                            </button>
+                                        </a>
+                                        <a href="/Voziloes/Delete/@item.VoziloId" class="color-white">
+                                            <button class="btn btn-danger m-2">
+                                                Избриши
+                                            </button>
+                                        </a>
+                                        @*@Html.ActionLink("Delete", "Delete", new { id = item.VoziloId }) <span> | </span>*@
+                                    }
+
+                                    @*@Html.ActionLink("Details", "Details", new { id = item.VoziloId })*@
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            }
+            
+           
+            }
+            </div>
+
+
+
+
+
+
+            <br /> <br /> <br />
+            <a href="/Kategorijas/Index"><h5>Назад кон категории</h5></a>

@@ -1,0 +1,96 @@
+﻿@model RentACar.Models.Vozilo
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+
+
+<h2>Дали сте сигурни дека сакате да го избришете ова возило?</h2>
+<div>
+    
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ImageUrl)
+        </dt>
+        <dd>
+            <img src="@Model.ImageUrl" style="height: 150px;" />
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Kategorija.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Kategorija.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Proizvoditel.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Proizvoditel.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Sopstvenik.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Sopstvenik.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ModelName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ModelName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Location)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Location)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PriceDay)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PriceDay)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Godina)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Godina)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Menuvac)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Menuvac)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Registracija)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Registracija)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Moknost)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Moknost)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Избриши" class="btn btn-danger" /> |
+            @Html.ActionLink("Откажи", "Index")
+        </div>
+    }
+</div>

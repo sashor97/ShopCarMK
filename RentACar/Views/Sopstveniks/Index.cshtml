@@ -1,0 +1,64 @@
+﻿@model IEnumerable<RentACar.Models.Sopstvenik>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@if (User.IsInRole("Owner"))
+{
+    <h2>Лични податоци</h2>
+}
+else
+{
+    <h2>Сопственици</h2>
+}
+
+
+<div class="container">
+    <div class="row">
+
+
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 col-lg-2 col-sm-6 bg-light border rounded m-3 p-3">
+                <p>
+                    @Html.DisplayFor(modelItem => item.Name)
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </p>
+                <p>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </p>
+
+                <p>
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        <a href="Sopstveniks/Delete/@item.SopstvenikId">
+                            <button class="btn btn-danger m-2">
+                                Избриши
+                            </button>
+                        </a>
+                    }
+                    @if (User.IsInRole("Administrator") || User.IsInRole("Owner"))
+                    {
+                <a href="Sopstveniks/Edit/@item.SopstvenikId">
+                    <button class="btn btn-primary m-2">
+                        Промени
+                    </button>
+                </a>
+                    }
+
+                    <a href="/Sopstveniks/Details/@item.SopstvenikId">
+                        <button class="btn btn-primary m-2">
+                            Детали
+                        </button>
+                    </a>
+                        <a href="/Sopstveniks/PrikaziVozilaSopstvenik?id=@item.SopstvenikId" class="color-white">
+                            <button class="btn btn-primary m-2">
+                                Види возила(@item.Vozila.Count().ToString())
+                            </button>
+                        </a>
+                </p>
+
+            </div>
+        }
+    </div>

@@ -1,0 +1,82 @@
+﻿@model IEnumerable<RentACar.Models.Komentar>
+@{
+    ViewBag.Title = "Index";
+}
+<h2>Коментари</h2>
+@*
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+*@
+<table id="tabela" class="table">
+    <thead>
+        <tr>
+            @if (!User.IsInRole("User"))
+            {
+            <th>
+                @Html.DisplayNameFor(model => model.Korisnik.Name)
+            </th>
+            }
+            <th>
+                @Html.DisplayNameFor(model => model.Vozilo.ModelName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rating)
+            </th>
+            <th><b>Опции</b></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                @if (!User.IsInRole("User")) { 
+                <td>
+                    @Html.DisplayFor(modelItem => item.Korisnik.Name)
+                </td>
+                }
+                <td>
+                    <a href="/Voziloes/Details/@item.VoziloId">
+                        @Html.DisplayFor(modelItem => item.Vozilo.ModelName)
+                    </a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rating)
+                </td>
+                <td>
+                    <a href="/Komentars/Details/@item.SopstvenikId">
+                        <button class="btn btn-primary m-2">
+                            Детали
+                        </button>
+                    </a>
+                        <a href="/Komentars/Edit/@item.SopstvenikId">
+                            <button class="btn btn-primary m-2">
+                                Промени
+                            </button>
+                        </a>
+                        <a href="/Komentars/Delete/@item.SopstvenikId">
+                            <button class="btn btn-danger m-2">
+                                Избриши
+                            </button>
+                        </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts{
+
+    <script>
+        $(document).ready(function () {
+            $("#tabela").DataTable();
+        });
+    </script>
+
+}

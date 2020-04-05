@@ -1,0 +1,29 @@
+﻿@model RentACar.Models.Proizvoditel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Детали за производителот</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @if (User.IsInRole("Administrator"))
+    {
+        @Html.ActionLink("Промени", "Edit", new { id = Model.ProizvoditelId }) <span> | </span>
+    }
+    
+    @Html.ActionLink("Назад кон листата со производители", "Index")
+</p>

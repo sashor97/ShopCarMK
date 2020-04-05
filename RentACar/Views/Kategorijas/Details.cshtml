@@ -1,0 +1,37 @@
+﻿@model RentACar.Models.Kategorija
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Детали за категоријата</h2>
+
+<div>
+    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @if (User.IsInRole("Administrator"))
+    {
+        @Html.ActionLink("Промени", "Edit", new { id = Model.KategorijaId }) <span> | </span>
+    }
+    @Html.ActionLink("Назад кон листата со категории", "Index")
+</p>

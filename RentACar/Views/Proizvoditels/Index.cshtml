@@ -1,0 +1,79 @@
+﻿@model IEnumerable<RentACar.Models.Proizvoditel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Производители</h2>
+
+<p>
+    @if (User.IsInRole("Administrator"))
+    {
+        @Html.ActionLink("Додај нов производител", "Create");
+    }
+
+</p>
+<table id="tabela" class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+             
+            <th>Опции</th>
+            
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @if (User.IsInRole("Owner"))
+                    {
+                    <a href="/Proizvoditels/PrikaziVozilaProizvoditel/@item.ProizvoditelId">@item.Name (@item.Vozila.Where(v => v.SopstvenikId == ViewBag.SopstvenikId).Count().ToString())</a>
+                    }
+                    else
+                    {
+                        <a href="/Proizvoditels/PrikaziVozilaProizvoditel/@item.ProizvoditelId">@item.Name (@item.Vozila.Count.ToString())</a>
+                    }
+
+
+                </td>
+
+                <td>
+                    <a href="/Proizvoditels/Details/@item.ProizvoditelId">
+                        <button class="btn btn-primary m-2">
+                            Детали
+                        </button>
+                    </a>
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        <a href="/Proizvoditels/Edit/@item.ProizvoditelId">
+                            <button class="btn btn-primary m-2">
+                                Промени
+                            </button>
+                        </a>
+                        <a href="/Proizvoditels/Delete/@item.ProizvoditelId">
+                            <button class="btn btn-danger m-2">
+                                Избриши
+                            </button>
+                        </a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts{
+
+    <script>
+        $(document).ready(function () {
+            $("#tabela").DataTable();
+        });
+    </script>
+
+}

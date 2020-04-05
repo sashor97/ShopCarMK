@@ -1,0 +1,90 @@
+﻿@model RentACar.Models.Sopstvenik
+
+@{
+    ViewBag.Title = "Details";
+}
+<div class="container">
+    <h4>Сопственик</h4>
+    <hr />
+    <div class="container bg-light border rounded m-3 p-3">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <b>
+                    @Html.DisplayNameFor(model => model.Name)
+                </b>
+            </div>
+
+            <div class="col-lg-3 col-sm-6 col-md-6">
+                @Html.DisplayFor(model => model.Name)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <b>
+                    @Html.DisplayNameFor(model => model.LastName)
+                </b>
+            </div>
+
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                @Html.DisplayFor(model => model.LastName)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <b>
+                    @Html.DisplayNameFor(model => model.Address)
+                </b>
+            </div>
+
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                @Html.DisplayFor(model => model.Address)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <b>
+                    @Html.DisplayNameFor(model => model.Age)
+                </b>
+            </div>
+
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                @Html.DisplayFor(model => model.Age)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <b>
+                    @Html.DisplayNameFor(model => model.email)
+                </b>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                @Html.DisplayFor(model => model.email)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <b>
+                    @Html.DisplayNameFor(model => model.Telefon)
+                </b>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                @Html.DisplayFor(model => model.Telefon)
+            </div>
+        </div>
+
+        </dl>
+    </div>
+    <p>
+        @if (User.IsInRole("Administrator") || User.IsInRole("Owner"))
+        {
+            @Html.ActionLink("Промени", "Edit", new { id = Model.SopstvenikId }) <span> | </span>
+        }
+        @if (User.IsInRole("Owner"))
+        {
+            @Html.ActionLink("Назад кон моите возила", "Index", "Voziloes")
+        }
+        else
+        {
+            @Html.ActionLink("Назад кон листата", "Index")
+        }
+    </p>

@@ -1,0 +1,83 @@
+﻿@model IEnumerable<RentACar.Models.Kategorija>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Категории</h2>
+
+<p>
+    @if (User.IsInRole("Administrator"))
+    {
+
+        @Html.ActionLink("Додај нова категорија", "Create");
+    }
+
+</p>
+<table id="tabela" class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+
+            <th>Опции</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @if(User.IsInRole("Owner")){
+                    <a href="/Kategorijas/PrikaziVozilaKategorija/@item.KategorijaId">@item.Name (@item.Vozila.Where(v => v.SopstvenikId == ViewBag.SopstvenikId).Count().ToString())</a>
+                    }
+                    else{
+                    <a href="/Kategorijas/PrikaziVozilaKategorija/@item.KategorijaId">@item.Name (@item.Vozila.Count.ToString())</a>
+                    }
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+
+
+
+                <td>
+                    <a href="/Kategorijas/Details/@item.KategorijaId">
+                        <button class="btn btn-primary m-2">
+                            Детали
+                        </button>
+                    </a>
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        <a href="/Kategorijas/Edit/@item.KategorijaId">
+                            <button class="btn btn-primary m-2">
+                                Промени
+                            </button>
+                        </a>
+                        <a href="/Kategorijas/Delete/@item.KategorijaId">
+                            <button class="btn btn-danger m-2">
+                                Избриши
+                            </button>
+                        </a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts{
+
+    <script>
+        $(document).ready(function () {
+            $("#tabela").DataTable();
+        });
+    </script>
+
+}

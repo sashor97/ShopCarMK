@@ -45,7 +45,7 @@
 
 
 
-                    @if (!User.IsInRole("Administrator") || !User.IsInRole("User") || User.IsInRole("Owner"))
+                    @if (User.IsInRole("Owner"))
                     {
                         <li>@Html.ActionLink("Продај возило", "Create", "Voziloes")</li>
                     }

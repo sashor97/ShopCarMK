@@ -25,11 +25,12 @@ namespace RentACar.Models
         [Display(Name = "Локација на возилото")]
         public string Location { get; set; }
 
+        [Range(0, Int32.MaxValue)]
         [Required(ErrorMessage = "Цената на возилото е задолжителна")]
         [Display(Name = "Цена во евра")]
         public double PriceDay { get; set; }
 
-
+        [Range(1900, 2020)]
         [Required(ErrorMessage = "Година на производство на возилото е задолжителна")]
         [Display(Name = "Година")]
         public int Godina { get; set; }

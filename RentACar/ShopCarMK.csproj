@@ -220,6 +220,7 @@
     <Compile Include="Models\Komentar.cs" />
     <Compile Include="Models\Korisnik.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\PrebaruvajModel.cs" />
     <Compile Include="Models\Proizvoditel.cs" />
     <Compile Include="Models\Sopstvenik.cs" />
     <Compile Include="Models\Vozilo.cs" />
@@ -539,6 +540,8 @@
     <Content Include="Views\Kategorijas\PrikaziVozilaKategorija.cshtml" />
     <Content Include="Views\Proizvoditels\PrikaziVozilaProizvoditel.cshtml" />
     <Content Include="Views\Sopstveniks\PrikaziVozilaSopstvenik.cshtml" />
+    <Content Include="Views\Voziloes\Prebaruvaj.cshtml" />
+    <Content Include="Views\Voziloes\PrebaruvajRezultati.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

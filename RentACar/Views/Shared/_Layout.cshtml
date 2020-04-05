@@ -38,7 +38,10 @@
 
                     <li>@Html.ActionLink("Производители", "Index", "Proizvoditels")</li>
 
-
+                    @if (User.IsInRole("User") || !User.IsInRole("Administrator") &&  !User.IsInRole("Owner"))
+                    {
+                        <li>@Html.ActionLink("Пребарувај", "Prebaruvaj", "Voziloes")</li>
+                    }
 
 
 
@@ -52,13 +55,13 @@
 
 
 
-                    @if (User.IsInRole("Administrator") || User.IsInRole("User"))
+                    @if (User.IsInRole("Administrator"))
                     {
                         <li>@Html.ActionLink("Сопственици", "Index", "Sopstveniks")</li>
                     }
 
 
-                   
+
 
                     @if (User.IsInRole("Owner"))
                     {

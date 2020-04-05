@@ -151,6 +151,328 @@ namespace RentACar.Controllers
             return View(vozilo);
         }
 
+
+        public ActionResult Prebaruvaj()
+        {
+
+            List<string> goriva = new List<string>();
+            goriva.Add("Одбери");
+            goriva.Add("Бензин");
+            goriva.Add("Бензин/Плин");
+            goriva.Add("Дизел");
+            goriva.Add("Хибрид");
+            goriva.Add("Електричен");
+            ViewBag.Gorivo = goriva;
+
+            List<string> podredi = new List<string>();
+            podredi.Add("Растечки");
+            podredi.Add("Опаѓачки");
+            ViewBag.Podredi = podredi;
+
+            List<string> menuvac = new List<string>();
+            menuvac.Add("Одбери");
+            menuvac.Add("Автоматски");
+            menuvac.Add("Рачен");
+            ViewBag.Menuvac = menuvac;
+
+            List<string> registracija = new List<string>();
+            registracija.Add("Одбери");
+            registracija.Add("Македонска");
+            registracija.Add("Странска");
+            ViewBag.Registracija = registracija;
+
+            List<string> lokacija = new List<string>();
+            lokacija.Add("Одбери");
+            lokacija.Add("Скопје");
+            lokacija.Add("Берово");
+            lokacija.Add("Битола");
+            lokacija.Add("Валандово");
+            lokacija.Add("Виница");
+            lokacija.Add("Велес");
+            lokacija.Add("Гевгелија");
+            lokacija.Add("Гостивар");
+            lokacija.Add("Дебар");
+            lokacija.Add("Делчево");
+            lokacija.Add("Демир Капија");
+            lokacija.Add("Дојран");
+            lokacija.Add("Зрновци");
+            lokacija.Add("Кавадарци");
+            lokacija.Add("Кичево");
+            lokacija.Add("Кочани");
+            lokacija.Add("Кратово");
+            lokacija.Add("Крива Паланка");
+            lokacija.Add("Крушево");
+            lokacija.Add("Куманово");
+            lokacija.Add("Македонска Каменица");
+            lokacija.Add("Македонски Брод");
+            lokacija.Add("Неготино");
+            lokacija.Add("Охрид");
+            lokacija.Add("Пехчево");
+            lokacija.Add("Прилеп");
+            lokacija.Add("Пробиштип");
+            lokacija.Add("Радовиш");
+            lokacija.Add("Свети Никола");
+            lokacija.Add("Струга");
+            lokacija.Add("Струмица");
+            lokacija.Add("Тетово");
+            lokacija.Add("Чашка");
+            lokacija.Add("Чешиново-Облешево");
+            lokacija.Add("Штип");
+            ViewBag.Lokacija = lokacija;
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult PrebaruvajRezultati([Bind(Include = "cenaOd, cenaDo, godinaOd, godinaDo, Gorivo, Menuvac, Registracija, Podredi, Lokacija ")] PrebaruvajModel model)
+        {
+            if (model.Podredi == "Растечки")
+            {
+                
+                if (model.Gorivo == "Одбери" && model.Menuvac == "Одбери" && model.Registracija == "Одбери" && model.Lokacija == "Одбери")
+                {
+                    var vozila = db.Vozila.Include(v => v.Kategorija).Include(v => v.Proizvoditel).Include(v => v.Sopstvenik).Where(v => v.Godina >= model.godinaOd && v.Godina <= model.godinaDo && v.PriceDay <= model.cenaDo && v.PriceDay >= model.cenaOd).OrderBy(x => x.PriceDay);
+                    return View(vozila.ToList());
+                }
+
+                else if (model.Gorivo != "Одбери" && model.Menuvac == "Одбери" && model.Registracija == "Одбери" && model.Lokacija == "Одбери")
+                {
+                    var vozila = db.Vozila.Include(v => v.Kategorija).Include(v => v.Proizvoditel).Include(v => v.Sopstvenik).Where(v => v.Godina >= model.godinaOd && v.Godina <= model.godinaDo && v.PriceDay <= model.cenaDo && v.PriceDay >= model.cenaOd && v.Gorivo == model.Gorivo).OrderBy(x => x.PriceDay);
+                    return View(vozila.ToList());
+                }
+
+                else if (model.Gorivo != "Одбери" && model.Menuvac != "Одбери" && model.Registracija == "Одбери" && model.Lokacija == "Одбери")
+                {
+                    var vozila = db.Vozila.Include(v => v.Kategorija).Include(v => v.Proizvoditel).Include(v => v.Sopstvenik).Where(v => v.Godina >= model.godinaOd && v.Godina <= model.godinaDo && v.PriceDay <= model.cenaDo && v.PriceDay >= model.cenaOd && v.Gorivo == model.Gorivo && v.Menuvac == model.Menuvac).OrderBy(x => x.PriceDay);
+                    return View(vozila.ToList());
+                }
+
+                else if (model.Gorivo != "Одбери" && model.Menuvac != "Одбери" && model.Registracija != "Одбери" && model.Lokacija == "Одбери")
+                {
+                    var vozila = db.Vozila.Include(v => v.Kategorija).Include(v => v.Proizvoditel).Include(v => v.Sopstvenik).Where(v => v.Godina >= model.godinaOd && v.Godina <= model.godinaDo && v.PriceDay <= model.cenaDo && v.PriceDay >= model.cenaOd && v.Gorivo == model.Gorivo && v.Menuvac == model.Menuvac && v.Registracija == model.Registracija).OrderBy(x => x.PriceDay);
+                    return View(vozila.ToList());
+                }
+
+                else if (model.Gorivo == "Одбери" && model.Menuvac != "Одбери" && model.Registracija == "Одбери" && model.Lokacija == "Одбери")
+                {
+                    var vozila = db.Vozila.Include(v => v.Kategorija).Include(v => v.Proizvoditel).Include(v => v.Sopstvenik).Where(v => v.Godina >= model.godinaOd && v.Godina <= model.godinaDo && v.PriceDay <= model.cenaDo && v.PriceDay >= model.cenaOd &&  v.Menuvac == model.Menuvac ).OrderBy(x => x.PriceDay);
+                    return View(vozila.ToList());
+                }
+
+                else if (model.Gorivo == "Одбери" && model.Menuvac == "Одбери" && model.Registracija != "Одбери" && model.Lokacija == "Одбери")
+                {
+                    var vozila = db.Vozila.Include(v => v.Kategorija).Include(v => v.Proizvoditel).Include(v => v.Sopstvenik).Where(v => v.Godina >= model.godinaOd && v.Godina <= model.godinaDo && v.PriceDay <= model.cenaDo && v.PriceDay >= model.cenaOd && v.Registracija == model.Registracija).OrderBy(x => x.PriceDay);
+                    return View(vozila.ToList());
+                }
+
+                else if (model.Gorivo != "Одбери" && model.Menuvac != "Одбери" && model.Registracija == "Одбери" && model.Lokacija == "Одбери")
+                {
+                    var vozila = db.Vozila.Include(v => v.Kategorija).Include(v => v.Proizvoditel).Include(v => v.Sopstvenik).Where(v => v.Godina >= model.godinaOd && v.Godina <= model.godinaDo && v.PriceDay <= model.cenaDo && v.PriceDay >= model.cenaOd && v.Gorivo == model.Gorivo && v.Menuvac == model.Menuvac ).OrderBy(x => x.PriceDay);
+                    return View(vozila.ToList());
+                }
+
+                else if (model.Gorivo != "Одбери" && model.Menuvac == "Одбери" && model.Registracija != "Одбери" && model.Lokacija == "Одбери")
+                {
+                    var vozila = db.Vozila.Include(v => v.Kategorija).Include(v => v.Proizvoditel).Include(v => v.Sopstvenik).Where(v => v.Godina >= model.godinaOd && v.Godina <= model.godinaDo && v.PriceDay <= model.cenaDo && v.PriceDay >= model.cenaOd && v.Gorivo == model.Gorivo  && v.Registracija == model.Registracija).OrderBy(x => x.PriceDay);
+                    return View(vozila.ToList());
+                }
+
+                else if (model.Gorivo == "Одбери" && model.Menuvac != "Одбери" && model.Registracija != "Одбери" && model.Lokacija == "Одбери")
+                {
+                    var vozila = db.Vozila.Include(v => v.Kategorija).Include(v => v.Proizvoditel).Include(v => v.Sopstvenik).Where(v => v.Godina >= model.godinaOd && v.Godina <= model.godinaDo && v.PriceDay <= model.cenaDo && v.PriceDay >= model.cenaOd  && v.Menuvac == model.Menuvac && v.Registracija == model.Registracija).OrderBy(x => x.PriceDay);
+                    return View(vozila.ToList());
+                }
+
+
+
+
+
+                if (model.Gorivo == "Одбери" && model.Menuvac == "Одбери" && model.Registracija == "Одбери" && model.Lokacija != "Одбери")
+                {
+                    var vozila = db.Vozila.Include(v => v.Kategorija).Include(v => v.Proizvoditel).Include(v => v.Sopstvenik).Where(v => v.Godina >= model.godinaOd && v.Godina <= model.godinaDo && v.PriceDay <= model.cenaDo && v.PriceDay >= model.cenaOd && v.Location == model.Lokacija).OrderBy(x => x.PriceDay);
+                    return View(vozila.ToList());
+                }
+
+                else if (model.Gorivo != "Одбери" && model.Menuvac == "Одбери" && model.Registracija == "Одбери" && model.Lokacija != "Одбери")
+                {
+                    var vozila = db.Vozila.Include(v => v.Kategorija).Include(v => v.Proizvoditel).Include(v => v.Sopstvenik).Where(v => v.Godina >= model.godinaOd && v.Godina <= model.godinaDo && v.PriceDay <= model.cenaDo && v.PriceDay >= model.cenaOd && v.Gorivo == model.Gorivo && v.Location == model.Lokacija).OrderBy(x => x.PriceDay);
+                    return View(vozila.ToList());
+                }
+
+                else if (model.Gorivo != "Одбери" && model.Menuvac != "Одбери" && model.Registracija == "Одбери" && model.Lokacija != "Одбери")
+                {
+                    var vozila = db.Vozila.Include(v => v.Kategorija).Include(v => v.Proizvoditel).Include(v => v.Sopstvenik).Where(v => v.Godina >= model.godinaOd && v.Godina <= model.godinaDo && v.PriceDay <= model.cenaDo && v.PriceDay >= model.cenaOd && v.Gorivo == model.Gorivo && v.Menuvac == model.Menuvac && v.Location == model.Lokacija).OrderBy(x => x.PriceDay);
+                    return View(vozila.ToList());
+                }
+
+                else if (model.Gorivo != "Одбери" && model.Menuvac != "Одбери" && model.Registracija != "Одбери" && model.Lokacija != "Одбери")
+                {
+                    var vozila = db.Vozila.Include(v => v.Kategorija).Include(v => v.Proizvoditel).Include(v => v.Sopstvenik).Where(v => v.Godina >= model.godinaOd && v.Godina <= model.godinaDo && v.PriceDay <= model.cenaDo && v.PriceDay >= model.cenaOd && v.Gorivo == model.Gorivo && v.Menuvac == model.Menuvac && v.Registracija == model.Registracija && v.Location == model.Lokacija).OrderBy(x => x.PriceDay);
+                    return View(vozila.ToList());
+                }
+
+                else if (model.Gorivo == "Одбери" && model.Menuvac != "Одбери" && model.Registracija == "Одбери" && model.Lokacija != "Одбери")
+                {
+                    var vozila = db.Vozila.Include(v => v.Kategorija).Include(v => v.Proizvoditel).Include(v => v.Sopstvenik).Where(v => v.Godina >= model.godinaOd && v.Godina <= model.godinaDo && v.PriceDay <= model.cenaDo && v.PriceDay >= model.cenaOd && v.Menuvac == model.Menuvac && v.Location == model.Lokacija).OrderBy(x => x.PriceDay);
+                    return View(vozila.ToList());
+                }
+
+                else if (model.Gorivo == "Одбери" && model.Menuvac == "Одбери" && model.Registracija != "Одбери" && model.Lokacija != "Одбери")
+                {
+                    var vozila = db.Vozila.Include(v => v.Kategorija).Include(v => v.Proizvoditel).Include(v => v.Sopstvenik).Where(v => v.Godina >= model.godinaOd && v.Godina <= model.godinaDo && v.PriceDay <= model.cenaDo && v.PriceDay >= model.cenaOd && v.Registracija == model.Registracija && v.Location == model.Lokacija).OrderBy(x => x.PriceDay);
+                    return View(vozila.ToList());
+                }
+
+                else if (model.Gorivo != "Одбери" && model.Menuvac != "Одбери" && model.Registracija == "Одбери" && model.Lokacija != "Одбери")
+                {
+                    var vozila = db.Vozila.Include(v => v.Kategorija).Include(v => v.Proizvoditel).Include(v => v.Sopstvenik).Where(v => v.Godina >= model.godinaOd && v.Godina <= model.godinaDo && v.PriceDay <= model.cenaDo && v.PriceDay >= model.cenaOd && v.Gorivo == model.Gorivo && v.Menuvac == model.Menuvac && v.Location == model.Lokacija).OrderBy(x => x.PriceDay);
+                    return View(vozila.ToList());
+                }
+
+                else if (model.Gorivo != "Одбери" && model.Menuvac == "Одбери" && model.Registracija != "Одбери" && model.Lokacija != "Одбери")
+                {
+                    var vozila = db.Vozila.Include(v => v.Kategorija).Include(v => v.Proizvoditel).Include(v => v.Sopstvenik).Where(v => v.Godina >= model.godinaOd && v.Godina <= model.godinaDo && v.PriceDay <= model.cenaDo && v.PriceDay >= model.cenaOd && v.Gorivo == model.Gorivo && v.Registracija == model.Registracija && v.Location == model.Lokacija).OrderBy(x => x.PriceDay);
+                    return View(vozila.ToList());
+                }
+
+                else //if (model.Gorivo == "Одбери" && model.Menuvac != "Одбери" && model.Registracija != "Одбери" && model.Lokacija != "Одбери")
+                {
+                    var vozila = db.Vozila.Include(v => v.Kategorija).Include(v => v.Proizvoditel).Include(v => v.Sopstvenik).Where(v => v.Godina >= model.godinaOd && v.Godina <= model.godinaDo && v.PriceDay <= model.cenaDo && v.PriceDay >= model.cenaOd && v.Menuvac == model.Menuvac && v.Registracija == model.Registracija && v.Location == model.Lokacija).OrderBy(x => x.PriceDay);
+                    return View(vozila.ToList());
+                }
+
+
+
+
+            }
+            else
+            {
+                if (model.Gorivo == "Одбери" && model.Menuvac == "Одбери" && model.Registracija == "Одбери"  && model.Lokacija == "Одбери")
+                {
+                    var vozila = db.Vozila.Include(v => v.Kategorija).Include(v => v.Proizvoditel).Include(v => v.Sopstvenik).Where(v => v.Godina >= model.godinaOd && v.Godina <= model.godinaDo && v.PriceDay <= model.cenaDo && v.PriceDay >= model.cenaOd).OrderByDescending(x => x.PriceDay);
+                    return View(vozila.ToList());
+                }
+
+                if (model.Gorivo != "Одбери" && model.Menuvac == "Одбери" && model.Registracija == "Одбери" && model.Lokacija == "Одбери")
+                {
+                    var vozila = db.Vozila.Include(v => v.Kategorija).Include(v => v.Proizvoditel).Include(v => v.Sopstvenik).Where(v => v.Godina >= model.godinaOd && v.Godina <= model.godinaDo && v.PriceDay <= model.cenaDo && v.PriceDay >= model.cenaOd && v.Gorivo == model.Gorivo).OrderByDescending(x => x.PriceDay);
+                    return View(vozila.ToList());
+                }
+
+                if (model.Gorivo != "Одбери" && model.Menuvac != "Одбери" && model.Registracija == "Одбери" && model.Lokacija == "Одбери")
+                {
+                    var vozila = db.Vozila.Include(v => v.Kategorija).Include(v => v.Proizvoditel).Include(v => v.Sopstvenik).Where(v => v.Godina >= model.godinaOd && v.Godina <= model.godinaDo && v.PriceDay <= model.cenaDo && v.PriceDay >= model.cenaOd && v.Gorivo == model.Gorivo && v.Menuvac == model.Menuvac).OrderByDescending(x => x.PriceDay);
+                    return View(vozila.ToList());
+                }
+
+                if (model.Gorivo != "Одбери" && model.Menuvac != "Одбери" && model.Registracija != "Одбери" && model.Lokacija == "Одбери")
+                {
+                    var vozila = db.Vozila.Include(v => v.Kategorija).Include(v => v.Proizvoditel).Include(v => v.Sopstvenik).Where(v => v.Godina >= model.godinaOd && v.Godina <= model.godinaDo && v.PriceDay <= model.cenaDo && v.PriceDay >= model.cenaOd && v.Gorivo == model.Gorivo && v.Menuvac == model.Menuvac && v.Registracija == model.Registracija).OrderByDescending(x => x.PriceDay);
+                    return View(vozila.ToList());
+                }
+
+                if (model.Gorivo == "Одбери" && model.Menuvac != "Одбери" && model.Registracija == "Одбери" && model.Lokacija == "Одбери")
+                {
+                    var vozila = db.Vozila.Include(v => v.Kategorija).Include(v => v.Proizvoditel).Include(v => v.Sopstvenik).Where(v => v.Godina >= model.godinaOd && v.Godina <= model.godinaDo && v.PriceDay <= model.cenaDo && v.PriceDay >= model.cenaOd && v.Menuvac == model.Menuvac).OrderByDescending(x => x.PriceDay);
+                    return View(vozila.ToList());
+                }
+
+                if (model.Gorivo == "Одбери" && model.Menuvac == "Одбери" && model.Registracija != "Одбери" && model.Lokacija == "Одбери")
+                {
+                    var vozila = db.Vozila.Include(v => v.Kategorija).Include(v => v.Proizvoditel).Include(v => v.Sopstvenik).Where(v => v.Godina >= model.godinaOd && v.Godina <= model.godinaDo && v.PriceDay <= model.cenaDo && v.PriceDay >= model.cenaOd && v.Registracija == model.Registracija).OrderByDescending(x => x.PriceDay);
+                    return View(vozila.ToList());
+                }
+
+                if (model.Gorivo != "Одбери" && model.Menuvac != "Одбери" && model.Registracija == "Одбери" && model.Lokacija == "Одбери")
+                {
+                    var vozila = db.Vozila.Include(v => v.Kategorija).Include(v => v.Proizvoditel).Include(v => v.Sopstvenik).Where(v => v.Godina >= model.godinaOd && v.Godina <= model.godinaDo && v.PriceDay <= model.cenaDo && v.PriceDay >= model.cenaOd && v.Gorivo == model.Gorivo && v.Menuvac == model.Menuvac).OrderByDescending(x => x.PriceDay);
+                    return View(vozila.ToList());
+                }
+
+                if (model.Gorivo != "Одбери" && model.Menuvac == "Одбери" && model.Registracija != "Одбери" && model.Lokacija == "Одбери")
+                {
+                    var vozila = db.Vozila.Include(v => v.Kategorija).Include(v => v.Proizvoditel).Include(v => v.Sopstvenik).Where(v => v.Godina >= model.godinaOd && v.Godina <= model.godinaDo && v.PriceDay <= model.cenaDo && v.PriceDay >= model.cenaOd && v.Gorivo == model.Gorivo && v.Registracija == model.Registracija).OrderByDescending(x => x.PriceDay);
+                    return View(vozila.ToList());
+                }
+
+                if (model.Gorivo == "Одбери" && model.Menuvac != "Одбери" && model.Registracija != "Одбери" && model.Lokacija == "Одбери")
+                {
+                    var vozila = db.Vozila.Include(v => v.Kategorija).Include(v => v.Proizvoditel).Include(v => v.Sopstvenik).Where(v => v.Godina >= model.godinaOd && v.Godina <= model.godinaDo && v.PriceDay <= model.cenaDo && v.PriceDay >= model.cenaOd && v.Menuvac == model.Menuvac && v.Registracija == model.Registracija).OrderByDescending(x => x.PriceDay);
+                    return View(vozila.ToList());
+                }
+
+
+
+
+
+
+
+                if (model.Gorivo == "Одбери" && model.Menuvac == "Одбери" && model.Registracija == "Одбери" && model.Lokacija != "Одбери")
+                {
+                    var vozila = db.Vozila.Include(v => v.Kategorija).Include(v => v.Proizvoditel).Include(v => v.Sopstvenik).Where(v => v.Godina >= model.godinaOd && v.Godina <= model.godinaDo && v.PriceDay <= model.cenaDo && v.PriceDay >= model.cenaOd && v.Location == model.Lokacija).OrderByDescending(x => x.PriceDay);
+                    return View(vozila.ToList());
+                }
+
+                if (model.Gorivo != "Одбери" && model.Menuvac == "Одбери" && model.Registracija == "Одбери" && model.Lokacija != "Одбери")
+                {
+                    var vozila = db.Vozila.Include(v => v.Kategorija).Include(v => v.Proizvoditel).Include(v => v.Sopstvenik).Where(v => v.Godina >= model.godinaOd && v.Godina <= model.godinaDo && v.PriceDay <= model.cenaDo && v.PriceDay >= model.cenaOd && v.Gorivo == model.Gorivo && v.Location == model.Lokacija).OrderByDescending(x => x.PriceDay);
+                    return View(vozila.ToList());
+                }
+
+                if (model.Gorivo != "Одбери" && model.Menuvac != "Одбери" && model.Registracija == "Одбери" && model.Lokacija != "Одбери")
+                {
+                    var vozila = db.Vozila.Include(v => v.Kategorija).Include(v => v.Proizvoditel).Include(v => v.Sopstvenik).Where(v => v.Godina >= model.godinaOd && v.Godina <= model.godinaDo && v.PriceDay <= model.cenaDo && v.PriceDay >= model.cenaOd && v.Gorivo == model.Gorivo && v.Menuvac == model.Menuvac && v.Location == model.Lokacija).OrderByDescending(x => x.PriceDay);
+                    return View(vozila.ToList());
+                }
+
+                if (model.Gorivo != "Одбери" && model.Menuvac != "Одбери" && model.Registracija != "Одбери" && model.Lokacija != "Одбери")
+                {
+                    var vozila = db.Vozila.Include(v => v.Kategorija).Include(v => v.Proizvoditel).Include(v => v.Sopstvenik).Where(v => v.Godina >= model.godinaOd && v.Godina <= model.godinaDo && v.PriceDay <= model.cenaDo && v.PriceDay >= model.cenaOd && v.Gorivo == model.Gorivo && v.Menuvac == model.Menuvac && v.Registracija == model.Registracija && v.Location == model.Lokacija).OrderByDescending(x => x.PriceDay);
+                    return View(vozila.ToList());
+                }
+
+                if (model.Gorivo == "Одбери" && model.Menuvac != "Одбери" && model.Registracija == "Одбери" && model.Lokacija != "Одбери")
+                {
+                    var vozila = db.Vozila.Include(v => v.Kategorija).Include(v => v.Proizvoditel).Include(v => v.Sopstvenik).Where(v => v.Godina >= model.godinaOd && v.Godina <= model.godinaDo && v.PriceDay <= model.cenaDo && v.PriceDay >= model.cenaOd && v.Menuvac == model.Menuvac && v.Location == model.Lokacija).OrderByDescending(x => x.PriceDay);
+                    return View(vozila.ToList());
+                }
+
+                if (model.Gorivo == "Одбери" && model.Menuvac == "Одбери" && model.Registracija != "Одбери" && model.Lokacija != "Одбери")
+                {
+                    var vozila = db.Vozila.Include(v => v.Kategorija).Include(v => v.Proizvoditel).Include(v => v.Sopstvenik).Where(v => v.Godina >= model.godinaOd && v.Godina <= model.godinaDo && v.PriceDay <= model.cenaDo && v.PriceDay >= model.cenaOd && v.Registracija == model.Registracija && v.Location == model.Lokacija).OrderByDescending(x => x.PriceDay);
+                    return View(vozila.ToList());
+                }
+
+                if (model.Gorivo != "Одбери" && model.Menuvac != "Одбери" && model.Registracija == "Одбери" && model.Lokacija != "Одбери")
+                {
+                    var vozila = db.Vozila.Include(v => v.Kategorija).Include(v => v.Proizvoditel).Include(v => v.Sopstvenik).Where(v => v.Godina >= model.godinaOd && v.Godina <= model.godinaDo && v.PriceDay <= model.cenaDo && v.PriceDay >= model.cenaOd && v.Gorivo == model.Gorivo && v.Menuvac == model.Menuvac && v.Location == model.Lokacija).OrderByDescending(x => x.PriceDay);
+                    return View(vozila.ToList());
+                }
+
+                if (model.Gorivo != "Одбери" && model.Menuvac == "Одбери" && model.Registracija != "Одбери" && model.Lokacija != "Одбери")
+                {
+                    var vozila = db.Vozila.Include(v => v.Kategorija).Include(v => v.Proizvoditel).Include(v => v.Sopstvenik).Where(v => v.Godina >= model.godinaOd && v.Godina <= model.godinaDo && v.PriceDay <= model.cenaDo && v.PriceDay >= model.cenaOd && v.Gorivo == model.Gorivo && v.Registracija == model.Registracija && v.Location == model.Lokacija).OrderByDescending(x => x.PriceDay);
+                    return View(vozila.ToList());
+                }
+
+                 else //  if (model.Gorivo == "Одбери" && model.Menuvac != "Одбери" && model.Registracija != "Одбери" && model.Lokacija != "Одбери")
+                {
+                    var vozila = db.Vozila.Include(v => v.Kategorija).Include(v => v.Proizvoditel).Include(v => v.Sopstvenik).Where(v => v.Godina >= model.godinaOd && v.Godina <= model.godinaDo && v.PriceDay <= model.cenaDo && v.PriceDay >= model.cenaOd && v.Menuvac == model.Menuvac && v.Registracija == model.Registracija && v.Location == model.Lokacija).OrderByDescending(x => x.PriceDay);
+                    return View(vozila.ToList());
+                }
+
+
+
+
+
+
+                
+            }
+            
+           
+        }
+
         [Authorize(Roles = "Administrator, Owner")]
         // GET: Voziloes/Create
         public ActionResult Create()

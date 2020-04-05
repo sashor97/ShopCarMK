@@ -1,5 +1,5 @@
-# RentACar
-Project for Internet Technologies 
+# ShopCarMK
+Project 
 
 
 
@@ -12,9 +12,8 @@ Project for Internet Technologies
 1. admin@gmail.com
 
 Сопственици:
-1. antonio@gmail.com
-2. metodi@gmail.com
-3. sashe@gmail.com
+1. metodi@gmail.com
+2. sashe@gmail.com
 
 Корисници:
 1. petar@gmail.com
@@ -25,6 +24,6 @@ Project for Internet Technologies
 Шемата за базата е претставена на следната слика
 ![Database](database.png)
 
-Сашо Ристески 161043 <br/>
-Антонио Славкоски 161152 <br/>
 Методи Наков 161041 <br/>
+Сашо Ристески 161043 <br/>
+
